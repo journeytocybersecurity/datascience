@@ -15,7 +15,7 @@ def learn_bigram_language_model(input_file):
     bigram_counts = {} # dictionary of dictionary
     with open(input_file,"r+") as f:
         lis=f.readlines()
-        newlis=[("<s>"+" "+sentence.rstrip()+" "+"</s>\n").split() for sentence in lis]       
+        newlis=[("<s>"+" "+sentence.rstrip()+" "+"</s>\n").split() for sentence in lis]#각 문장에 시작문자 끝문자 붙인 후 단어 단위로 분해.    
         for sentence in newlis:#unigram 빈도수 계산. 
             for word in sentence:
                 if word in unigram_counts:
@@ -31,7 +31,7 @@ def learn_bigram_language_model(input_file):
         for sentence in newlis:
             for word in sentence:
                 if "</s>"!=word: 
-                    bigram_counts[word][sentence[sentence.index(word)+1]]+=1#defaultdict를 이용해 모든 딕셔너리의 value를 0으로 만들고 하나씩 더하기. 
+                    bigram_counts[word][sentence[sentence.index(word)+1]]+=1#value들이 0으로 리셋된 dict 안 dict 에 공기어 빈도 추가. 
     return unigram_counts, bigram_counts
  #learn_bigram_language_model(input_file)은 두개의 딕셔너리가 들어간 tuple을 반환해야한다
 ################################################################################
