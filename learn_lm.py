@@ -27,11 +27,15 @@ def learn_bigram_language_model(input_file):
         for sentence in newlis:
             for word in sentence:
                 bigram_counts[word]=defaultdict(int)
-                #일단 defaultint로 dict 안 dict의 모든 value를 0으로. 
+                #일단 defaultint로 dict 안 dict의 모든 value를 0으로.
+        curr_word="<s>"                
         for sentence in newlis:
             for word in sentence:
-                if "</s>"!=word: 
-                    bigram_counts[word][sentence[sentence.index(word)+1]]+=1#value들이 0으로 리셋된 dict 안 dict 에 공기어 빈도 추가. 
+                prev_word=curr_word
+                curr_word=word #처음엔 둘다 "<s>"로 같겠지만 그다음부터 1씩 차이.#같을 때에 대해서도 고려해주어야 한다. 
+                #"</s>"에 이르면 sentence 가 끝나 </s>가 prev_word 가 되는 일은 없다.    
+                if curr_word!="<s>":
+                    bigram_counts[prev_word][curr_word]+=1#value들이 0으로 리셋된 dict 안 dict 에 공기어 빈도 추가. 
     return unigram_counts, bigram_counts
  #learn_bigram_language_model(input_file)은 두개의 딕셔너리가 들어간 tuple을 반환해야한다
 ################################################################################
